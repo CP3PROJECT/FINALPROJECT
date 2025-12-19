@@ -1,0 +1,18 @@
+{
+    "git.ignoreLimitWarning": true,
+    "C_Cpp.errorSquiggles": "disabled",
+    "files.associations": {
+        "3cdegrdifonksiyonu": "c",
+        "4metinselİfadelerdedepolama": "c",
+        "stdio.h": "c",
+        "8SORU1.C": "cpp",
+        "time.h": "c",
+        "typeinfo": "c"
+    },
+    "C_Cpp.files.exclude": {
+        "**/.vscode": true,
+        "**/.vs": true
+    },
+   
+
+}
