@@ -3,7 +3,7 @@
 #include <string.h>
 
 
-void initializeTypes(Type Types[18]) {
+void initializeTypes(Type Types[]) {
     FILE *file = fopen("types.txt", "r");
     if (file == NULL) {
         printf("Error: Could not open types.txt!\n");
@@ -16,8 +16,19 @@ void initializeTypes(Type Types[18]) {
         for (int j = 0; j < 18; j++) {
             strcpy(Types[i].effects[j].atkName, Types[i].name);
             fscanf(file, "%s %lf", Types[i].effects[j].defName, &Types[i].effects[j].multiplier);
+            
         }
-    }
 
+    }
     fclose(file);
+
+    strcpy(Types[18].name, "None");
+
+    for (int j = 0; j < 19; j++) {
+        strcpy(Types[18].effects[j].atkName, "None");
+        strcpy(Types[18].effects[j].defName, Types[j].name);
+        Types[18].effects[j].multiplier = 1.0;
+    }
+    
+    
 }

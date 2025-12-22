@@ -1,7 +1,7 @@
 #include "move.h"
 #include <stdio.h>
 
-void initializeMoves(Move Moves[486], Type Types[18]) {
+void initializeMoves(Move Moves[], Type Types[]) {
     FILE *file = fopen("moves.txt", "r");
     if (file == NULL) {
         printf("Error: Could not open moves.txt!\n");

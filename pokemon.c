@@ -3,7 +3,7 @@
 #include <string.h>
 #include "pokemon.h"
 
-void initializePokemons(Pokemon Pokemons[1015], Move Moves[486], Type Types[18]) {
+void initializePokemons(Pokemon Pokemons[], Move Moves[], Type Types[]) {
     // 1. Dosyayı açıyoruz
     FILE *file = fopen("pokemon.txt", "r");
     if (file == NULL) {
@@ -32,14 +32,16 @@ void initializePokemons(Pokemon Pokemons[1015], Move Moves[486], Type Types[18])
 
             // İkinci tip kontrolü: Eğer "-" ise "None" yap
             if (strcmp(type2Name, "-") == 0) {
-                strcpy(Pokemons[i].types[1].name, "None");
-                // "None" tipi için tüm çarpanları 1.0 yap
-                for (int k = 0; k < 18; k++) {
-                    Pokemons[i].types[1].effects[k].multiplier = 1.0;
+                // Döküman kuralı: "-" ise Types[18] (None) ata
+                Pokemons[i].types[1] = Types[18];
+            } else {
+                // Değilse gerçek tipi ara
+                for (int j = 0; j < 18; j++) {
+                    if (strcmp(type2Name, Types[j].name) == 0) {
+                    Pokemons[i].types[1] = Types[j];
+                    break;
+                    }
                 }
-            } else if (strcmp(type2Name, Types[j].name) == 0) {
-                // Eğer "-" değilse, Types dizisindeki karşılığını bul ve ata
-                Pokemons[i].types[1] = Types[j];
             }
         }
 

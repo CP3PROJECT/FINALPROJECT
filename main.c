@@ -7,7 +7,7 @@
 
 int main(void)
 {
-    Type Types[18];
+    Type Types[19];
     Move Moves[486];
     Pokemon Pokemons[1015];
     Player Player1;

@@ -9,7 +9,7 @@ typedef struct {
 
 typedef struct {
     char name[50];
-    TypeEffect effects[18];
+    TypeEffect effects[19];
 } Type;
 
 #endif
