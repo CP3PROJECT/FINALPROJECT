@@ -3,7 +3,6 @@
 #include "pokemon.h"
 #include "player.h"
 #include "game.h" 
-#include "utils.h" 
 
 int main(void)
 {

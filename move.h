@@ -15,4 +15,6 @@ typedef struct {
     int power;
 } Move;
 
+void initializeMoves(Move Moves[], Type Types[]);
+
 #endif

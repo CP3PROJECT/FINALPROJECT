@@ -16,4 +16,6 @@ typedef struct {
     Move moves[4]; 
 } Pokemon;
 
+void initializePokemons(Pokemon Pokemons[], Move Moves[], Type Types[]);
+
 #endif

@@ -9,4 +9,6 @@ typedef struct {
     int currentIndex;     
 } Player;
 
+void initialize(Type Types[], Move Moves[], Pokemon Pokemons[], Player* Player1, Player* Player2);
+
 #endif

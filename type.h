@@ -12,4 +12,6 @@ typedef struct {
     TypeEffect effects[19];
 } Type;
 
+void initializeTypes(Type Types[]);
+
 #endif
