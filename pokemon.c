@@ -1,7 +1,7 @@
-#include "pokemon.h"#include <stdio.h>
+#include "pokemon.h"
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "pokemon.h"
 
 void initializePokemons(Pokemon Pokemons[], Move Moves[], Type Types[]) {
     // 1. Dosyayı açıyoruz

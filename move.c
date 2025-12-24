@@ -1,5 +1,6 @@
 #include "move.h"
 #include <stdio.h>
+#include <string.h>
 
 void initializeMoves(Move Moves[], Type Types[]) {
     FILE *file = fopen("moves.txt", "r");
