@@ -7,7 +7,7 @@ void initializePokemons(Pokemon Pokemons[], Move Moves[], Type Types[]) {
     // 1. Dosyayı açıyoruz
     FILE *file = fopen("pokemon.txt", "r");
     if (file == NULL) {
-        printf("Pokemon dosyasi bulunamadi!\n");
+        printf("Error: Could not open pokemon.txt!\n");
         return;
     }
 
