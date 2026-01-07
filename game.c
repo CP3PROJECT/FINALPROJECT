@@ -85,46 +85,144 @@ void applyDamage(Player *Player1, Player *Player2, int choice1, int choice2, int
     }
 }
 
-// PDF 2.2.7: Round fonksiyonu (Girişleri alır ve applyDamage'ı çağırır)
+
+// PDF 2.2.7: Round fonksiyonu (Giriş doğrulamalı ve sıralı seçimli)
 void roundFunction(Player *Player1, Player *Player2) {
     int choice1, choice2, moveIdx1 = -1, moveIdx2 = -1;
 
-    // Player 1 Seçim [cite: 189-191]
-    printf("\n--- %s's Turn (Active: %s) ---\n", Player1->name, Player1->Pokemons[Player1->currentIndex-1].name);
-    printf("1- Attack\n2- Change Pokemon\nChoice: ");
-    scanf("%d", &choice1);
-
-    if (choice1 == 1) { // Attack [cite: 196]
-        for (int i = 0; i < 4; i++) printf("%d- %s  ", i+1, Player1->Pokemons[Player1->currentIndex-1].moves[i].name);
-        printf("\nSelect a move: ");
-        scanf("%d", &moveIdx1); moveIdx1--; // 0-tabanlıya çevir [cite: 202]
-    } else { // Change Pokemon [cite: 203]
-        printf("Available Pokemons:\n");
-        for (int i = 0; i < 6; i++) {
-            if (Player1->Pokemons[i].currentHP > 0) printf("%d- %s (HP: %d)\n", i+1, Player1->Pokemons[i].name, Player1->Pokemons[i].currentHP);
+    // --- 1. ADIM: Oyuncu 1 Ana Karar (Sadece Attack mı Change mi?) ---
+    do {
+        Pokemon *p1 = &Player1->Pokemons[Player1->currentIndex - 1]; 
+        printf("\n--- %s's Decision (Active: %s - HP: %d) ---\n", 
+               Player1->name, p1->name, p1->currentHP);
+        printf("1- Attack\n2- Change Pokemon\nChoice: ");
+        
+        if (scanf("%d", &choice1) != 1) {
+            printf("[HATA] Gecersiz giris! Lutfen 1 veya 2 giriniz.\n");
+            while(getchar() != '\n')
+                continue; 
+            choice1 = 0; 
+            continue;
         }
-        printf("Select a Pokemon to switch: ");
-        scanf("%d", &Player1->currentIndex); // currentIndex'i güncelle [cite: 212]
+        if (choice1 != 1 && choice1 != 2) {
+            printf("Invalid choice! Please choose 1 or 2!\n");
+        }
+    } while(choice1 != 1 && choice1 != 2);
+
+    // --- 2. ADIM: Oyuncu 2 Ana Karar (Sadece Attack mı Change mi?) ---
+    do {
+        Pokemon *p2 = &Player2->Pokemons[Player2->currentIndex - 1];
+        printf("\n--- %s's Decision (Active: %s - HP: %d) ---\n", 
+               Player2->name, p2->name, p2->currentHP);
+        printf("1- Attack\n2- Change Pokemon\nChoice: ");
+        
+        if (scanf("%d", &choice2) != 1) {
+            printf("[HATA] Gecersiz giris!\n");
+            while(getchar() != '\n')
+                continue; 
+            choice2 = 0;
+            continue;
+        }
+        if (choice2 != 1 && choice2 != 2) {
+            printf("Invalid choice! Please choose 1 or 2!\n");
+        }
+    } while (choice2 != 1 && choice2 != 2);
+
+    // --- 3. ADIM: Oyuncu 1 Detay Seçimi (Hamle veya Pokemon seçimi) ---
+    Pokemon *p1_detail = &Player1->Pokemons[Player1->currentIndex - 1];
+    if (choice1 == 1) { // SALDIRI DETAYI
+        while (1) {
+            printf("\n%s, select your move: \n", Player1->name);
+            for (int i = 0; i < 4; i++) 
+                printf("%d- %s  ", i+1, p1_detail->moves[i].name);
+            
+            printf("\nSelect a move (1-4): ");
+            if (scanf("%d", &moveIdx1) != 1) {
+                while(getchar() != '\n')
+                    continue;
+                printf("[HATA] Lutfen bir sayi giriniz!\n");
+                continue;
+            }
+            if (moveIdx1 >= 1 && moveIdx1 <= 4) {
+                moveIdx1--; 
+                break;
+            } else {
+                printf("[UYARI] Yanlis secim! Lutfen 1 ile 4 arasinda bir hamle secin.\n");
+            }
+        }
+    } else { // DEĞİŞTİRME DETAYI
+        int switchIdx;
+        while (1) {
+            printf("\n%s, available Pokemons:\n", Player1->name);
+            for (int i = 0; i < 6; i++) {
+                if (Player1->Pokemons[i].currentHP > 0) {
+                    printf("%d- %s (HP: %d)\n", i+1, Player1->Pokemons[i].name, Player1->Pokemons[i].currentHP);
+                }
+            }
+            printf("Select a Pokemon to switch: ");
+            if (scanf("%d", &switchIdx) != 1) {
+                while(getchar() != '\n')
+                    continue;
+                printf("\n[HATA] Lutfen bir sayi giriniz!\n\n");
+                continue;
+            }
+            if (switchIdx >= 1 && switchIdx <= 6 && Player1->Pokemons[switchIdx-1].currentHP > 0) {
+                Player1->currentIndex = switchIdx;
+                break;
+            } else {
+                printf("\n[UYARI] Gecersiz secim! Listede olan aktif birini secin.\n\n");
+            }
+        }
     }
 
-    // Player 2 Seçim [cite: 192-194]
-    printf("\n--- %s's Turn (Active: %s) ---\n", Player2->name, Player2->Pokemons[Player2->currentIndex-1].name);
-    printf("1- Attack\n2- Change Pokemon\nChoice: ");
-    scanf("%d", &choice2);
-
-    if (choice2 == 1) {
-        for (int i = 0; i < 4; i++) printf("%d- %s  ", i+1, Player2->Pokemons[Player2->currentIndex-1].moves[i].name);
-        printf("\nSelect a move: ");
-        scanf("%d", &moveIdx2); moveIdx2--;
-    } else {
-        printf("Available Pokemons:\n");
-        for (int i = 0; i < 6; i++) {
-            if (Player2->Pokemons[i].currentHP > 0) printf("%d- %s (HP: %d)\n", i+1, Player2->Pokemons[i].name, Player2->Pokemons[i].currentHP);
+    // --- 4. ADIM: Oyuncu 2 Detay Seçimi (Hamle veya Pokemon seçimi) ---
+    Pokemon *p2_detail = &Player2->Pokemons[Player2->currentIndex - 1];
+    if (choice2 == 1) { // SALDIRI DETAYI
+        while (1) {
+            printf("\n%s, select your move: \n", Player2->name);
+            for (int i = 0; i < 4; i++) 
+                printf("%d- %s  ", i+1, p2_detail->moves[i].name);
+            
+            printf("\nSelect a move (1-4): ");
+            if (scanf("%d", &moveIdx2) != 1) {
+                while(getchar() != '\n')
+                    continue;
+                printf("[HATA] Lutfen bir sayi giriniz!\n");
+                continue;
+            }
+            if (moveIdx2 >= 1 && moveIdx2 <= 4) {
+                moveIdx2--;
+                break;
+            } else {
+                printf("[UYARI] Yanlis secim! Lutfen 1 ile 4 arasinda bir hamle secin.\n");
+            }
         }
-        printf("Select a Pokemon to switch: ");
-        scanf("%d", &Player2->currentIndex);
+    } else { // DEĞİŞTİRME DETAYI
+        int switchIdx;
+        while (1) {
+            printf("\n%s, available Pokemons:\n", Player2->name);
+            for (int i = 0; i < 6; i++) {
+                if (Player2->Pokemons[i].currentHP > 0) {
+                    printf("%d- %s (HP: %d)\n", i+1, Player2->Pokemons[i].name, Player2->Pokemons[i].currentHP);
+                }
+            }
+            printf("Select a Pokemon to switch: ");
+            if (scanf("%d", &switchIdx) != 1) {
+                while(getchar() != '\n')
+                    continue;
+                printf("\n[HATA] Lutfen bir sayi giriniz!\n\n");
+                continue;
+            }
+            if (switchIdx >= 1 && switchIdx <= 6 && Player2->Pokemons[switchIdx-1].currentHP > 0) {
+                Player2->currentIndex = switchIdx;
+                break; 
+            } else {
+                printf("\n[UYARI] Gecersiz secim! Listede olan aktif birini secin.\n\n");
+            }
+        }
     }
 
+    // --- 5. ADIM: Hesaplama ---
     applyDamage(Player1, Player2, choice1, choice2, moveIdx1, moveIdx2);
 }
 

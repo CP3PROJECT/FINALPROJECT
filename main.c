@@ -11,6 +11,8 @@
     Player Player1;
     Player Player2;
 
+// gcc -Wall -Werror -Wextra *.c -o project 
+
 int main(void)
 {
     printf("Program basladi...\n");
