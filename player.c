@@ -10,20 +10,21 @@ void initialize(Type Types[], Move Moves[], Pokemon Pokemons[], Player* Player1,
     initializeMoves(Moves, Types);
     initializePokemons(Pokemons, Moves, Types);
 
-    //rastgele pokemon atama
+   // random pokemon assignment
     srand(time(NULL));
 
-    //player isimlerini atama
+    //player names assignment
     strcpy(Player1->name, "Ayşegül");
     strcpy(Player2->name, "Safiye");
 
+    // starting index assignment
     Player1->currentIndex = 1;
     Player2->currentIndex = 1;
 
-    //kullanılan pokemonların indexinin saklanacağı array
+   // Array to store the indices of the selected Pokémon
     int usedPokemon[1015] = {0};
 
-    //Player1 e rastgele pokemon atama
+    // random pokemons assignment to Player1
     for (int i = 0; i < 6; i++) {
         int index;
 
@@ -35,7 +36,7 @@ void initialize(Type Types[], Move Moves[], Pokemon Pokemons[], Player* Player1,
         Player1->Pokemons[i] = Pokemons[index];
     }
 
-    //Player2 e rastgele pokemon atama
+    // random pokemons assignment to Player2
     for (int i = 0; i < 6; i++) {
         int index;
 

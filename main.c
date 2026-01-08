@@ -18,10 +18,8 @@ int main(void)
     printf("Game is starting...\n");
     
     printf("Good Luck...\n");
-    //arrayler adres olarak gider.
     initialize(Types, Moves, Pokemons, &Player1, &Player2);
     
-    printf("Oyun basliyor...\n");
     game(&Player1, &Player2);
 
     return 0;
