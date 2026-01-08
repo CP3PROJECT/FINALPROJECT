@@ -4,12 +4,14 @@
 
 
 void initializeTypes(Type Types[]) {
+    // Open the file
     FILE *file = fopen("types.txt", "r");
     if (file == NULL) {
         printf("Error: Could not open types.txt!\n");
         return;
     }
 
+    // Read 18 types
     for (int i = 0; i < 18; i++) {
         fscanf(file, "%s", Types[i].name);
 
@@ -20,8 +22,9 @@ void initializeTypes(Type Types[]) {
         }
 
     }
-    fclose(file);
+    fclose(file)
 
+    // Add "None" type
     strcpy(Types[18].name, "None");
 
     for (int j = 0; j < 19; j++) {

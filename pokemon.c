@@ -4,7 +4,7 @@
 #include <string.h>
 
 void initializePokemons(Pokemon Pokemons[], Move Moves[], Type Types[]) {
-    // 1. Dosyayı açıyoruz
+    // Open file
     FILE *file = fopen("pokemon.txt", "r");
     if (file == NULL) {
         printf("Pokemon dosyasi bulunamadi!\n");
@@ -14,28 +14,25 @@ void initializePokemons(Pokemon Pokemons[], Move Moves[], Type Types[]) {
     char type1Name[50], type2Name[50];
 
     for (int i = 0; i < 1015; i++) {
-        // 2. Verileri okuyoruz: İsim, Tip1, Tip2, HP, Atk, Def, SpAtk, SpDef, Speed
+        // Read the data
         fscanf(file, "%s %s %s %d %d %d %d %d %d", 
                Pokemons[i].name, type1Name, type2Name, 
                &Pokemons[i].maxHP, &Pokemons[i].attack, &Pokemons[i].defense, 
                &Pokemons[i].spAtk, &Pokemons[i].spDef, &Pokemons[i].speed);
 
-        // 3. Mevcut canı maksimum cana eşitle
         Pokemons[i].currentHP = Pokemons[i].maxHP;
 
-        // 4. Tipleri Eşleştirme (Type1 ve Type2)
+        //  Matching types
         for (int j = 0; j < 18; j++) {
-            // Birinci tip eşleşmesi
+            // First type match
             if (strcmp(type1Name, Types[j].name) == 0) {
                 Pokemons[i].types[0] = Types[j];
             }
 
-            // İkinci tip kontrolü: Eğer "-" ise "None" yap
+            // Second type check: "-" = none
             if (strcmp(type2Name, "-") == 0) {
-                // Döküman kuralı: "-" ise Types[18] (None) ata
                 Pokemons[i].types[1] = Types[18];
             } else {
-                // Değilse gerçek tipi ara
                 for (int j = 0; j < 18; j++) {
                     if (strcmp(type2Name, Types[j].name) == 0) {
                     Pokemons[i].types[1] = Types[j];
@@ -45,13 +42,13 @@ void initializePokemons(Pokemon Pokemons[], Move Moves[], Type Types[]) {
             }
         }
 
-        // 5. Rastgele 4 Adet Benzersiz Hareket (Move) Seçme
+        // Randomly Select 4 Unique Moves
         int count = 0;
         while (count < 4) {
-            int randomIdx = rand() % 486; // 0 ile 485 arası rastgele sayı
+            int randomIdx = rand() % 486; 
             int isDuplicate = 0;
 
-            // Seçilen hareket daha önce eklenmiş mi kontrol et (Unique kontrolü)
+            // Unique check
             for (int k = 0; k < count; k++) { 
                 if (strcmp(Pokemons[i].moves[k].name, Moves[randomIdx].name) == 0) {
                     isDuplicate = 1;
@@ -59,7 +56,7 @@ void initializePokemons(Pokemon Pokemons[], Move Moves[], Type Types[]) {
                 }
             }
 
-            // Eğer hareket yeni ise ekle
+            // Add the movement if it's new.
             if (!isDuplicate) {
                 Pokemons[i].moves[count] = Moves[randomIdx];
                 count++;
