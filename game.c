@@ -13,13 +13,19 @@ void applyDamage(Player *Player1, Player *Player2, int choice1, int choice2, int
 
     // Hız kontrolü: Daha hızlı olan Pokémon önce saldırır.
     if (p1->speed >= p2->speed) {
-        first = Player1; second = Player2;
-        firstChoice = choice1; secondChoice = choice2;
-        firstMove = moveIdx1; secondMove = moveIdx2;
+        first = Player1;
+        second = Player2;
+        firstChoice = choice1; 
+        secondChoice = choice2;
+        firstMove = moveIdx1;
+        secondMove = moveIdx2;
     } else {
-        first = Player2; second = Player1;
-        firstChoice = choice2; secondChoice = choice1;
-        firstMove = moveIdx2; secondMove = moveIdx1;
+        first = Player2;
+        second = Player1;
+        firstChoice = choice2;
+        secondChoice = choice1;
+        firstMove = moveIdx2;
+        secondMove = moveIdx1;
     }
 
     // İki saldırı aşaması (Önce hızlı olan, sonra yavaş olan)
@@ -98,7 +104,7 @@ void roundFunction(Player *Player1, Player *Player2) {
         printf("1- Attack\n2- Change Pokemon\nChoice: ");
         
         if (scanf("%d", &choice1) != 1) {
-            printf("[HATA] Gecersiz giris! Lutfen 1 veya 2 giriniz.\n");
+            printf("Error: Invalid input! Please enter 1 or 2!\n");
             while(getchar() != '\n')
                 continue; 
             choice1 = 0; 
@@ -117,7 +123,7 @@ void roundFunction(Player *Player1, Player *Player2) {
         printf("1- Attack\n2- Change Pokemon\nChoice: ");
         
         if (scanf("%d", &choice2) != 1) {
-            printf("[HATA] Gecersiz giris!\n");
+            printf("Error: Invalid input! Please try again.\n");
             while(getchar() != '\n')
                 continue; 
             choice2 = 0;
@@ -140,14 +146,14 @@ void roundFunction(Player *Player1, Player *Player2) {
             if (scanf("%d", &moveIdx1) != 1) {
                 while(getchar() != '\n')
                     continue;
-                printf("[HATA] Lutfen bir sayi giriniz!\n");
+                printf("Error: Please enter a number!\n");
                 continue;
             }
             if (moveIdx1 >= 1 && moveIdx1 <= 4) {
                 moveIdx1--; 
                 break;
             } else {
-                printf("[UYARI] Yanlis secim! Lutfen 1 ile 4 arasinda bir hamle secin.\n");
+                printf("[WARNING] Invalid selection! Please choose a move between 1 and 4.\n");
             }
         }
     } else { // DEĞİŞTİRME DETAYI
@@ -163,14 +169,14 @@ void roundFunction(Player *Player1, Player *Player2) {
             if (scanf("%d", &switchIdx) != 1) {
                 while(getchar() != '\n')
                     continue;
-                printf("\n[HATA] Lutfen bir sayi giriniz!\n\n");
+                printf("\nError: Please enter a number!\n\n");
                 continue;
             }
             if (switchIdx >= 1 && switchIdx <= 6 && Player1->Pokemons[switchIdx-1].currentHP > 0) {
                 Player1->currentIndex = switchIdx;
                 break;
             } else {
-                printf("\n[UYARI] Gecersiz secim! Listede olan aktif birini secin.\n\n");
+                printf("\n[WARNING] Invalid selection! Please choose an active Pokemon from the list.\n\n");
             }
         }
     }
@@ -187,14 +193,14 @@ void roundFunction(Player *Player1, Player *Player2) {
             if (scanf("%d", &moveIdx2) != 1) {
                 while(getchar() != '\n')
                     continue;
-                printf("[HATA] Lutfen bir sayi giriniz!\n");
+                printf("Error: Please enter a number!\n");
                 continue;
             }
             if (moveIdx2 >= 1 && moveIdx2 <= 4) {
                 moveIdx2--;
                 break;
             } else {
-                printf("[UYARI] Yanlis secim! Lutfen 1 ile 4 arasinda bir hamle secin.\n");
+                printf("[WARNING] Invalid selection! Please choose a move between 1 and 4.\n");
             }
         }
     } else { // DEĞİŞTİRME DETAYI
@@ -210,14 +216,14 @@ void roundFunction(Player *Player1, Player *Player2) {
             if (scanf("%d", &switchIdx) != 1) {
                 while(getchar() != '\n')
                     continue;
-                printf("\n[HATA] Lutfen bir sayi giriniz!\n\n");
+                printf("\nError: Please enter a number!\n\n");
                 continue;
             }
             if (switchIdx >= 1 && switchIdx <= 6 && Player2->Pokemons[switchIdx-1].currentHP > 0) {
                 Player2->currentIndex = switchIdx;
                 break; 
             } else {
-                printf("\n[UYARI] Gecersiz secim! Listede olan aktif birini secin.\n\n");
+                printf("\n[WARNING] Invalid selection! Please choose an active Pokemon from the list.\n\n");
             }
         }
     }

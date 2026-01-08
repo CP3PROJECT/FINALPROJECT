@@ -15,9 +15,9 @@
 
 int main(void)
 {
-    printf("Program basladi...\n");
+    printf("Game is starting...\n");
     
-    printf("Initialize ediliyor...\n");
+    printf("Good Luck...\n");
     //arrayler adres olarak gider.
     initialize(Types, Moves, Pokemons, &Player1, &Player2);
     
