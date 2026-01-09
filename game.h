@@ -1,7 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "player.h" // Player, Pokemon, Move ve Type'ı zincirleme getirir
+#include "player.h"
 
 void game(Player *p1, Player *p2);
 void roundFunction(Player *p1, Player *p2);
